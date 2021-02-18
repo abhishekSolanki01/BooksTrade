@@ -1,5 +1,7 @@
 import React from 'react';
 import { Meteor } from "meteor/meteor";
+import { Link } from 'react-router-dom';
+
 import TitleBar from "./TitleBar";
 import BooksList from "./BooksList"
 
@@ -12,12 +14,12 @@ export default class App extends React.Component{
   constructor(props){
     super(props)
   }
-  addBooks(title, author, description=null, imageUrl=null){
-    const bookId = BooksInfo.insert({userId : Meteor.userId(), title: title, author: author, description: description, imageUrl: imageUrl})
-    //Meteor.user().insert({booksId : [bookId]})
-    //Meteor.users.update({_id:Meteor.user()._id}, { $set: {booksId : bookId} }); -->stackoverflow code didnot work
+  // addBooks(title, author, description=null, imageUrl=null){
+  //   const bookId = BooksInfo.insert({userId : Meteor.userId(), title: title, author: author, description: description, imageUrl: imageUrl})
+  //   //Meteor.user().insert({booksId : [bookId]})
+  //   //Meteor.users.update({_id:Meteor.user()._id}, { $set: {booksId : bookId} }); -->stackoverflow code didnot work
 
-  }
+  // }
 
   render(){
  
@@ -28,8 +30,8 @@ export default class App extends React.Component{
           <BooksList />
           {Meteor.userId() &&
           <div>
-            <button>New Request</button>
-            <button>Add Books</button>
+            <button className="button">New Request</button>
+            <button className="button"><Link to="/books/my">Add Books</Link></button>
           </div>
           } 
           {!Meteor.userId() &&

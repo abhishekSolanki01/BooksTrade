@@ -25,6 +25,13 @@ export default class Signup extends React.Component{
             this.setState({email});
         }else if(e.target.name === 'password'){
             const password = e.target.value.trim();
+            let length = e.target.value.length;
+            if(length <= 8){
+                this.setState({error :`password length must be grater than ${length}`})
+            }else{
+                this.setState({error: ""})
+            }
+            
             this.setState({password});
         }else if(e.target.name === 'name'){
             const name = e.target.value.trim();
@@ -44,11 +51,16 @@ export default class Signup extends React.Component{
                 name
             }
         };
-       
+        if(this.state.password.length <= 8) {
+            this.setState({error : `password must be greater than 8 character`})
+            return;
+        }
         Accounts.createUser(options ,(error) => {
             console.log("logging user", error)
             if(error){
-                this.setState({error : "Something went wrong"})
+                this.setState({error : error.reason})
+            }else{
+                this.setState({error: ""})
             }
         });
 
@@ -61,24 +73,21 @@ export default class Signup extends React.Component{
                 <div className="wrapper">
                     <h1>Signup page</h1>
                     {this.state.error && <p>{this.state.error}</p>}
-                    <form onSubmit={this.onSubmit.bind(this)}>
+                    <form onSubmit={this.onSubmit.bind(this)} noValidate>
                             <input type="text"  
                             required={true}   
                             className="button"   
-                            name="name"                     
-                            value={this.state.name} 
+                            name="name"           
                             placeholder="Name" 
                             onChange={this.handleChange}/>
                         <input type="email" 
-                            className="button"
-                            value={this.state.email} 
+                            className="button" 
                             name="email"
                             placeholder="Email"
                             onChange={this.handleChange}/>
                         <input type="password"     
                             className="button"    
-                            name="password"                    
-                            value={this.state.password} 
+                            name="password"
                             placeholder="Password" 
                             onChange={this.handleChange}/>
                         <button type="submit" className="button" >Create Accounts</button>    

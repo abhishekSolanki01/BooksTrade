@@ -16,8 +16,9 @@ export default class AddBooks extends React.Component{
         let description= this.refs.description.value.trim();
         let imageUrl= this.refs.imageUrl.value;
         
-        if(title && author && Meteor.userId()){
-            this.props.addBooks(title, author, description, imageUrl);
+        if(title && author && Meteor.userId()){//later in the call back i will add his userid to usr coll
+            Meteor.call( 'booksInfo.insert',title, author, description, imageUrl);
+
         }
         
         this.refs.title.value = "";
