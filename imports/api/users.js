@@ -3,10 +3,6 @@ import SimpleSchema from 'simpl-schema';
 import { Accounts } from 'meteor/accounts-base';
 
 
-//validate the user just before its created, 4 that i used
-//a meteor hook(a method we can call) i give it a cllback
-//and it automatically calls this callback every time new user is made
-//available in Accounts...passing (user) as param
 Accounts.validateNewUser((user) => {
     const email = user.emails[0].address;
 
@@ -24,3 +20,40 @@ Accounts.validateNewUser((user) => {
 
     return true;
 })
+
+if(Meteor.isServer){
+    Meteor.publish('AllUsers', () => {
+        console.log("allusers",Meteor.users.find({}, {fields:{emails:1}}));
+        return Meteor.users.find({}, {fields:{emails:1,profile:1}})
+    })
+}
+
+Meteor.methods({
+    "user.update" (name,state,city,address){
+        if(!this.userId){
+            throw new Meteor.Error('not-authorized')
+        }
+
+        const filter = { _id: this.userId };
+        const options = {
+            profile : {
+                name,
+                city,
+                state,
+                address,
+            }
+        }
+        const updateDocument = {
+            $set: {
+                "profile.state": state,
+                "profile.city": city,
+                "profile.address":address
+            }
+        };
+        const result = Meteor.users.update(this.userId, { $set : options });
+    },
+    "user.remove" (userId) {
+        Meteor.users.remove({_id : userId});
+    }
+})
+

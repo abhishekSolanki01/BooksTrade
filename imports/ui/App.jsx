@@ -1,44 +1,71 @@
 import React from 'react';
 import { Meteor } from "meteor/meteor";
+import { Tracker } from 'meteor/tracker';
 import { Link } from 'react-router-dom';
 
-import TitleBar from "./TitleBar";
-import BooksList from "./BooksList"
+const adminId = ["TwENiA3zdPsChXhfj"]
 
-import { BooksInfo } from "../api/booksInfo"
+export default class App extends React.Component {
 
-
-
-export default class App extends React.Component{
-
-  constructor(props){
+  constructor(props) {
     super(props)
+    this.state={
+      isLoggedIn : false
+    }
+    this.renderIfAdmin = this.renderIfAdmin.bind(this);
+    this.renderMaterial = this.renderMaterial.bind(this)
   }
-  // addBooks(title, author, description=null, imageUrl=null){
-  //   const bookId = BooksInfo.insert({userId : Meteor.userId(), title: title, author: author, description: description, imageUrl: imageUrl})
-  //   //Meteor.user().insert({booksId : [bookId]})
-  //   //Meteor.users.update({_id:Meteor.user()._id}, { $set: {booksId : bookId} }); -->stackoverflow code didnot work
+  componentDidMount() {
+    Tracker.autorun(() => {
+      this.setState({isLoggedIn : !!Meteor.userId() })
+      this.renderIfAdmin();
+      this.renderMaterial();
+    })
+  }
 
-  // }
-
-  render(){
- 
-    return(
-      <div>
-        <TitleBar title="Books Trade" getUserNam={this.getUserName}/>
-        <div className="wrapper">
-          <BooksList />
-          {Meteor.userId() &&
-          <div>
-            <button className="button">New Request</button>
-            <button className="button"><Link to="/books/my">Add Books</Link></button>
-          </div>
-          } 
-          {!Meteor.userId() &&
-            <button>Login to Add books</button>
-          }
+  renderIfAdmin() {
+    if (Meteor.userId() === "TwENiA3zdPsChXhfj") {
+      return (
+        <div className="to-admin-section-lnk">
+          <Link to="/admin"><span>Admin Section</span></Link>
         </div>
+      )
+    } else {
+      console.log("not Admin");
+    }
+  }
+  renderMaterial(){
+    if(this.state.isLoggedIn){
+      return(
+        <div className="action">
+            <span className="action-btn"><button className="button" onClick={()=>Meteor.logout()}>Logout</button></span>
+            
+          </div>
+      )
+    }else{
+      return(
+        <div className="action">
+            <Link className="action-btn" to="/login"><button className="button">Login</button></Link>
+            <Link className="action-btn" to="/signup"><button className="button">Signup</button></Link>
+          </div>
+      )
+    }
+    
+  }
 
+  render() {
+
+    return (
+      <div>
+        <div className="hero-container">
+          <div className="hero-txt">
+            <h1>Job Portal</h1>
+          </div>
+          
+          {this.renderIfAdmin()}
+          {this.renderMaterial()}
+
+        </div>
       </div>
     );
   }

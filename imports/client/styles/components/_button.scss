@@ -1,9 +1,8 @@
 .button {
-    background:#05030f93 #010108
-;
-    border: 1px solid #555;
+    background:#05030f93 #010108;
+    //border: 1px solid #555;
     color: black;
-    cursor: alias;
+    cursor: pointer;
     font-weight: 600;
     margin-left: 1.3rem ;
     outline: none;
@@ -11,7 +10,7 @@
     transition: background .3s ease, transform .3s ease, color .3s ease ;
 
     &:hover, &:focus {
-        background:#010108;
+        background:green;
         color: white;
     }
     &:active{
@@ -25,4 +24,9 @@
     border-radius: 50%;
     height: 4rem;
     width: 4rem;
+}
+
+.save-btn{
+    display: flex;
+    float: right;
 }

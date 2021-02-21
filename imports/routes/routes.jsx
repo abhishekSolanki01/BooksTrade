@@ -1,41 +1,46 @@
 import React from "react";
+import { Meteor } from "meteor/meteor";
 import {
     BrowserRouter as Router,
+    Redirect,
     Switch,
     Route,
-    Link
+    Link,
+    useHistory
 } from "react-router-dom";
+import AdminPanel from "../ui/AdminPanel";
 
 import App from '../ui/App'
 import Signup from '../ui/Signup';
 import Login from '../ui/Login';
-import Users from '../ui/Users';
-import Profile from '../ui/Profile';
-import EditProfie from "../ui/EditProfile";
-import AddBooks from "../ui/AddBooks";
 
 export const routes = (
-    
-        <Router>
-            <Switch>
-                <Route path="/login" component={Login}/>
-                <Route path="/signup" component={Signup}/>
-                <Route path="/books/my" component={AddBooks} />
-                <Route path="/books" component={App}/>
-                <Route path="/users/edit" component={EditProfie}/>
-                <Route path="/users/profile" component={Profile}/>
-                <Route path="/users" component={Users}></Route>
-                
-                
-                
-                {/* <Route path="/books/my"></Route>
-                <Route path="/req"></Route>
-                <Route path="/req/new"></Route>
-                <Route path="/trades"></Route>
-                <Route path="/users"></Route>
-                <Route path="/users/edit"></Route>
-                <Route path="/users/*"></Route> */}
-            </Switch>
-        </Router>
+
+    <Router>
+        <Switch>
+           
+
+            <Route path="/login" render={()=>(
+                Meteor.userId() ? (<Redirect to="/" />) : ( <Login/> )
+            )} 
             
+            />
+            
+            <Route path="/signup" render={()=>(
+                Meteor.userId() ? (<Redirect to="/" />) : ( <Signup/> )
+            )} 
+            
+            />
+            <Route exact path="/admin" render={() => (
+                Meteor.userId() !== "TwENiA3zdPsChXhfj" ? (
+                    <Redirect to="/" />
+                ) : (
+                        <AdminPanel />
+                    )
+            )} />
+            <Route path="/" component={App} />
+
+        </Switch>
+    </Router>
+
 )

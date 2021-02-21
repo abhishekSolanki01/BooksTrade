@@ -1,0 +1,64 @@
+.hero-container{
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0,0.7),rgba(0, 0, 0, 0.7)), url(/img/Hero.jpg);
+    background-size: cover;
+    background-position:center;
+    height: 100vh;
+    background-attachment: fixed;
+}
+
+.hero-txt{
+    position: absolute;
+    width: 1140px;
+    top: 30%;
+    left : 10%;
+    color:rgb(4, 182, 4);
+    h1{
+        font-size: 9rem;
+        font-weight: 900;
+    }
+}
+
+.action{
+    position: absolute;
+    width: 1140px;
+    top: 80%;
+    left : 10%;
+
+}
+
+.action-btn{
+    width: 50px;
+    .button{
+        width: 20rem;
+    }
+}
+
+.in{
+    background:#05030f93 #010108;
+    //border: 1px solid #555;
+    color: black;
+    cursor: pointer;
+    font-weight: 600;
+    margin-left: 1.3rem ;
+    outline: none;
+    padding: 1.3rem;
+    transition: background .3s ease, transform .3s ease, color .3s ease ;
+
+}
+
+.to-admin-section-lnk{
+    float:right;
+    top: 5%;
+    left : 90%;
+    color:rgb(4, 182, 4);
+    font-size: 2.3rem;
+    text-decoration: none;
+    h1{
+        font-size: 9rem;
+        font-weight: 900;
+    }
+    span{
+        text-decoration: none;
+        color :rgb(4, 182, 4);
+    }
+}

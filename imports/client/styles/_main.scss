@@ -7,8 +7,7 @@
   }
   
   body {
-    background:#010108c9
-    ;
+    background:#010108c9;
     // #f2f2f2;
     color: #555;
     font-family: Helvetica,Arial,sans-serif;
@@ -23,6 +22,10 @@
     font-weight: 300;
     font-size: 2.4rem;
   }
+  input{
+    outline:none;
+    border: none;
+  }
   
 
   
@@ -31,8 +34,12 @@
 
 
 
-@import './components/title-bar';
+
 @import './components/wrapper';
-@import './components/items';
+
 @import './components/button';
-@import './components/navbar';
+
+@import './components/info-abt-page';
+
+@import './components/hero-container';
+@import './components/login'
